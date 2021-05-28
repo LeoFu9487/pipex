@@ -6,7 +6,7 @@
 /*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 02:21:00 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/28 15:56:41 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/28 16:37:31 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	parent_process(int pipefd[2], char **av, char **env)
 		close(pipefd[0]);
 		ft_putstr_fd("pipex: ", 2);
 		perror(av[4]);
-		exit(1);
+		normal_exit(1);
 	}
 	else
 	{
@@ -63,9 +63,9 @@ int	main(int ac, char **av, char **env)
 	int		pipefd[2];
 
 	if (ac != 5)
-		error_exit("arguments amount", 2);
+		message_exit("arguments amount", 2);
 	if (pipe(pipefd) < 0)
-		error_exit("pipe create error", 1);
+		message_exit("pipe create error", 1);
 	if (fork() == 0)
 		child_process(pipefd, av, env);
 	else

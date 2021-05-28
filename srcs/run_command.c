@@ -6,7 +6,7 @@
 /*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 15:35:31 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/28 16:29:38 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/28 16:37:51 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	run_path(char *path, char **args, char **env)
 	ft_putstr_fd("pipex: ", 2);
 	perror(args[0]);
 	if (errno == 13)
-		exit(126);
-	exit(127);
+		normal_exit(126);
+	normal_exit(127);
 }
 
 static void	multiple_path(char *path, int ct[3], char **args, char **env)
@@ -56,7 +56,7 @@ static void	find_path(int ct[3], char **args, char **env)
 	if (ct[2])
 		ft_putendl_fd(": permission denied", 2);
 	ft_putendl_fd(": command not found", 2);
-	exit(127 - ct[2]);
+	normal_exit(127 - ct[2]);
 }
 
 void	run_command(char *line, char **env)
