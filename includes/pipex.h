@@ -6,7 +6,7 @@
 /*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 02:21:03 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/27 20:22:32 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/28 15:36:00 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@
 */
 
 void	error_exit(char *str, int exit_code);
+void	run_command(char *line, char **env);
 
 #endif

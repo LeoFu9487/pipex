@@ -1,11 +1,11 @@
 NAME = pipex
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 
 CC = gcc
 
 #PUT FILES HERE
-SRCS_FILE = main.c	tool.c
+SRCS_FILE = main.c	tool.c	run_command.c
 
 SRCS_PATH = srcs/
 
