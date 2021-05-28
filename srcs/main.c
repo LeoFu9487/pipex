@@ -6,20 +6,11 @@
 /*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 02:21:00 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/27 23:36:05 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/28 14:49:44 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-/*
-** If error -> exit
-** return value :
-** < >		0
-** < >>		1
-** << >		2
-** << >>	3
-*/
 
 void	run_command(char *line, char **env)
 {
@@ -27,8 +18,10 @@ void	run_command(char *line, char **env)
 	char	*path;
 	char	**args;
 	int		idx;
+	int		permission_flag;
 
 	ct = -1;
+	permission_flag = 0;
 	while (line[++ct])
 		if (ft_isspace(line[ct]))
 			line[ct] = ' ';
@@ -38,7 +31,9 @@ void	run_command(char *line, char **env)
 		execve(args[0], args, env);
 		ft_putstr_fd("pipex: ", 2);
 		perror(args[0]);
-		return ;//or exit ?
+		if (errno == 13)
+			exit(126);
+		exit(127);
 	}
 	else
 	{
@@ -53,7 +48,9 @@ void	run_command(char *line, char **env)
 			execve(args[0], args, env);
 			ft_putstr_fd("pipex: ", 2);
 			perror(args[0]);
-			return ;//or exit ?
+			if (errno == 13)
+				exit(126);
+			exit(127);
 		}
 	}
 	env[ct] += 5;
@@ -67,6 +64,8 @@ void	run_command(char *line, char **env)
 			path[idx] = 0;
 			ft_strcat(path, args[0]);
 			execve(path, args, env);
+			if (errno == 13)
+				permission_flag = 1;
 			idx = 0;
 		}
 		else
@@ -79,12 +78,23 @@ void	run_command(char *line, char **env)
 				path[idx] = 0;
 				ft_strcat(path, args[0]);
 				execve(path, args, env);
+				if (errno == 13)
+					permission_flag = 1;
 			}
 		}
 		++env[ct];
 	}
 	ft_putstr_fd(args[0], 2);
-	ft_putendl_fd(": command not found", 2);
+	if (permission_flag)
+	{
+		ft_putendl_fd(": permission denied", 2);
+		exit(126);
+	}
+	else
+	{
+		ft_putendl_fd(": command not found", 2);
+		exit(127);
+	}
 }
 
 int main(int ac, char **av, char **env)
@@ -99,7 +109,7 @@ int main(int ac, char **av, char **env)
 	if (pipe(pipefd) < 0)
 		error_exit("pipe create error", 127);
 	pid = fork();
-	if (pid == 0)/*child process : write into pipe*/
+	if (pid == 0)
 	{
 		close(pipefd[0]);
 		fd = open(av[1], O_RDONLY);
@@ -118,7 +128,7 @@ int main(int ac, char **av, char **env)
 			run_command(av[2], env);
 		}
 	}
-	else/*parent process : read from pipe*/
+	else
 	{
 		waitpid(pid, &status, 0);
 		close(pipefd[1]);
@@ -128,6 +138,7 @@ int main(int ac, char **av, char **env)
 			close(pipefd[0]);
 			ft_putstr_fd("pipex: ", 2);
 			perror(av[4]);
+			exit (1);
 		}
 		else
 		{
@@ -138,8 +149,5 @@ int main(int ac, char **av, char **env)
 			run_command(av[3], env);
 		}
 	}
+	return (0);
 }
-
-/*
-** todo : exit (return value)
-*/
