@@ -6,7 +6,7 @@
 /*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 02:21:03 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/28 16:36:37 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/29 01:51:48 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@
 void	message_exit(char *str, int exit_code);
 void	normal_exit(int exit_code);
 void	run_command(char *line, char **env);
+void	bonus(int ac, char **av, char **env);
+void	child_process(int pipefd, char **av, char **env);
+void	parent_process(int pipefd, char **av, char **env);
 
 #endif

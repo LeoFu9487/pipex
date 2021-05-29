@@ -1,0 +1,2 @@
+https://stackoverflow.com/questions/48235261/bash-the-difference-between-and-redirect
+https://stackoverflow.com/questions/3756110/would-this-be-considered-a-memory-leak

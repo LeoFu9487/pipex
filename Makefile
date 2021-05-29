@@ -1,11 +1,14 @@
 NAME = pipex
 
+BONUS = pipex_bonus
+
 CFLAGS = -Wall -Wextra -Werror
 
-CC = gcc
+BONUSFLAGS = -D BONUS=1
 
+CC = gcc
 #PUT FILES HERE
-SRCS_FILE = main.c	tool.c	run_command.c
+SRCS_FILE = main.c	tool.c	run_command.c	bonus.c
 
 SRCS_PATH = srcs/
 
@@ -28,7 +31,12 @@ all : $(NAME)
 	echo "Compile OK"
 
 $(NAME) : $(HEADER) $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) -I $(HEADER_PATH) -c srcs/main.c -o srcs/main.o
 	$(CC) $(CFLAGS) -I $(HEADER_PATH) $(OBJS) $(LIBFLAGS) -o $(NAME)
+
+$(BONUS) : $(HEADER) $(LIBFT) $(OBJS)
+	$(CC) $(CFLAGS) $(BONUSFLAGS) -I $(HEADER_PATH) -c srcs/main.c -o srcs/main.o
+	$(CC) $(CFLAGS) -I $(HEADER_PATH) $(OBJS) $(LIBFLAGS) -o $(BONUS)
 
 $(LIBFT) : 
 	$(MAKE) -C ./libft/
@@ -36,7 +44,7 @@ $(LIBFT) :
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -I $(HEADER_PATH) -c $< -o $@
 
-bonus : $(NAME)
+bonus : $(BONUS)
 	echo "Compile Bonus OK"
 
 clean : 
@@ -45,7 +53,7 @@ clean :
 	echo "clean OK"
 
 fclean :
-	rm -rf $(OBJS) $(NAME)
+	rm -rf $(OBJS) $(NAME) $(BONUS)
 	$(MAKE) fclean -C ./libft/
 	echo "fclean OK"
 
