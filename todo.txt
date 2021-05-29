@@ -1,3 +1,2 @@
-test memory
+test memory(Do I need to deal with ctrl-C cause leaks ?)
 test everything
-change norm
