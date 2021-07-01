@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: yfu <yfu@student.42lyon.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 02:21:00 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/29 02:00:35 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/31 14:21:19 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	child_process(int pipefd, char **av, char **env)
 	int	fd;
 
 	fd = open(av[1], O_RDONLY);
-	if (errno)
+	if (fd < 0)
 	{
 		close(pipefd);
 		ft_putstr_fd("pipex: ", 2);
@@ -40,7 +40,7 @@ void	parent_process(int pipefd, char **av, char **env)
 
 	wait(NULL);
 	fd = open(av[4], O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (errno)
+	if (fd < 0)
 	{
 		close(pipefd);
 		ft_putstr_fd("pipex: ", 2);

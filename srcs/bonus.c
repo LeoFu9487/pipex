@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yfu <marvin@42.fr>                         +#+  +:+       +#+        */
+/*   By: yfu <yfu@student.42lyon.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 22:57:30 by yfu               #+#    #+#             */
-/*   Updated: 2021/05/29 02:27:45 by yfu              ###   ########lyon.fr   */
+/*   Updated: 2021/05/31 14:20:58 by yfu              ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void	sub(int ac, char **av, char **env, int pipefd[2])
 		fd = open(av[--ac - 1], O_WRONLY | O_APPEND | O_CREAT, 0664);
 	else
 		fd = open(av[ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (errno)
+	if (fd < 0)
 	{
 		close(pipefd[0]);
 		ft_putstr_fd("pipex: ", 2);
